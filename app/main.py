@@ -1,9 +1,15 @@
-from fastapi import FastAPI
+from pydantic import BaseSettings
+from pymongo import MongoClient
 
 
-def create_app():
-    _app = FastAPI()
-    return _app
+class Settings(BaseSettings):
+    mongodb_uri: str
+    mongodb_name: str
+
+    class Config:
+        env_file = ".env.dev"
 
 
-app = create_app()
+if __name__ == "__main__":
+    settings = Settings()
+    mongo_client = MongoClient()
